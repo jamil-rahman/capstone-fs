@@ -40,3 +40,87 @@
 .read-the-docs {
   color: #888;
 }
+
+form{
+  background-color: #503636;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Header styling */
+.header {
+  width: 15%;  /* 33% of the width */
+  height: 100vh;  /* Full height */
+  background-color: #f0f0f0;  /* Light gray background */
+  position: fixed;  /* Fix it on the left side */
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid #ccc;  /* Add border to separate header */
+}
+
+/* Navigation list styling */
+.nav-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.nav-list li {
+  margin: 15px 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+}
+
+.nav-list a:hover {
+  color: #007bff;  /* Blue color on hover */
+}
+
+/* Styling for the rest of the layout */
+.main-content {
+  margin-left: 15%;  /* Matches the width of the header */
+  margin-right: 20%;  /* Matches the width of the trivia section */
+  padding: 20px;
+  height: 100vh;  /* Full height of the viewport */
+  overflow: hidden;  /* Prevents unnecessary scroll */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styling for Trivia section */
+.trivia-section {
+  width: 20%;  /* Fixed width */
+  height: 100vh;  /* Full height of the viewport */
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  border-left: 2px solid #ccc;
+  overflow-y: auto;  /* Allows scrolling within trivia, if content overflows */
+  background-color: #e9ecef;
+}
+
+/* Cards inside Trivia section */
+.trivia-section .card {
+  margin-bottom: 15px;
+  color: #333;
+  border-radius: 10px;  /* Adds rounded corners */
+  background-color: white;  /* Distinct background from the section */
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Subtle shadow for modern effect */
+}
+
+/* Styling for the Card header */
+.card-title {
+  font-size: 1.5rem;  /* Bootstrap h1 size */
+  font-weight: bold;  /* Bold title */
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
