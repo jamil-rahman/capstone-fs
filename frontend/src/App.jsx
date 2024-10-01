@@ -7,6 +7,8 @@ import Body from './components/Body';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import CreatePost from './components/CreatePost';
+import Profile from './components/Profile';
+import Insight from './components/Insight';
 
 const router = createBrowserRouter([
   {
@@ -14,8 +16,8 @@ const router = createBrowserRouter([
     element: <Body />,
     children: [
       {
-          path: "/login",
-          element: <Login />,
+        path: "/login",
+        element: <Login />,
       },
       {
           path: "/signup",
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/createpost",
         element: <CreatePost />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/insight",
+        element: <Insight />,
       },
       {
           path: "*",
