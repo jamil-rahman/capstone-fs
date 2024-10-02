@@ -2,16 +2,17 @@
   "name": "when-in-roam",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^2.5.0",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "firebase-admin": "^12.5.0",
     "mongoose": "^8.6.2",
