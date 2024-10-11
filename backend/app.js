@@ -23,7 +23,7 @@ app.use(express.json());
 // MongoDB connection
 connectDB();
 
-// Define routes for user authentication and other user-related routes
+// Routes for my endpoints
 app.use('/api/users', userRoutes);
 
 // Start the server
