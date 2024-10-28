@@ -1,39 +1,70 @@
-const { User } = require('../models/User.js');  
-const { getAuth } = require('firebase-admin/auth'); 
+const { User } = require('../models/User.js');
+const { getAuth } = require('firebase-admin/auth');
 
 // Controller to handle user signup
 const signupUser = async (req, res) => {
-  // Destructure required fields from request body
   const { email, password, name } = req.body;
 
   try {
-    // Create a new user with Firebase
-    const userRecord = await getAuth().createUser({
-      email,
-      password,
-    });
+      // Create Firebase user
+      const userRecord = await getAuth().createUser({
+          email,
+          password,
+      });
 
-    // Store Firebase UID and user data in MongoDB
-    const newUser = new User({
-      firebaseUid: userRecord.uid,
-      email,
-      name,
-    });
+      // Create MongoDB user to store firebaseUid and other user data
+      const newUser = new User({
+          firebaseUid: userRecord.uid,
+          email,
+          name,
+          // All other fields will use their default values
+      });
 
-    await newUser.save(); // Save user in MongoDB
+      await newUser.save();
 
-    // Send success response
-    res.status(201).json({
-      message: 'User signed up successfully',
-      userId: newUser._id,
-    });
+      // Return the entire new user object
+      res.status(201).json({
+          success: true,
+          message: 'User signed up successfully',
+          user: newUser
+      });
   } catch (error) {
-    // Handle errors
-    res.status(400).json({
-      message: 'Signup failed',
-      error: error.message,
-    });
+      res.status(400).json({
+          success: false,
+          message: 'Signup failed',
+          error: error.message
+      });
   }
 };
 
-module.exports = { signupUser };
+const loginUser = async (req, res) => {
+  try {
+      const firebaseUid = req.user.uid;
+      
+      // Find user and return entire document
+      const user = await User.findOne({ firebaseUid });
+      
+      if (!user) {
+          return res.status(404).json({
+              success: false,
+              message: 'User not found in database'
+          });
+      }
+
+      // On success, return the entire user object and a success message
+      res.status(200).json({
+          success: true,
+          message: 'Login successful',
+          user  
+      });
+
+  } catch (error) {
+      res.status(500).json({
+          success: false,
+          message: 'Login failed',
+          error: error.message
+      });
+  }
+};
+
+module.exports = { signupUser, loginUser };
