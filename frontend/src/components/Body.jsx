@@ -9,11 +9,11 @@ const Body = () => {
   return (
     <>
         <Header />
-        <div className="main-content py-5">
+        {/* <div className="main-content"> */}
             <Container>
                 <Outlet />
             </Container>
-        </div>
+        {/* </div> */}
         <Trivia/>
         <Footer />
     </>

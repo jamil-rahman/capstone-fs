@@ -40,10 +40,37 @@
 .read-the-docs {
   color: #888;
 }
-
+/* 
 form{
   background-color: #503636;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
+} */
+
+/* updating the form */
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Updating the button */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
 }
 
 /* Header styling */
@@ -82,18 +109,6 @@ form{
   color: #007bff;  /* Blue color on hover */
 }
 
-/* Styling for the rest of the layout */
-.main-content {
-  margin-left: 15%;  /* Matches the width of the header */
-  margin-right: 20%;  /* Matches the width of the trivia section */
-  padding: 20px;
-  height: 100vh;  /* Full height of the viewport */
-  overflow: hidden;  /* Prevents unnecessary scroll */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* Styling for Trivia section */
 .trivia-section {
   width: 20%;  /* Fixed width */
@@ -123,4 +138,145 @@ form{
   font-weight: bold;  /* Bold title */
   margin: 0;
   padding: 0.5rem 1rem;
+}
+
+/* Styling the middle layout */
+.main-content {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #242424;
+}
+
+.profile-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.profile-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+.profile-form {
+  width: 100%;
+  background-color: #242424;
+  padding: 20px;
+}
+
+.profile-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-field label {
+  width: 200px;
+  margin-right: 10px;
+  color: #fff;
+  text-align: left;
+}
+
+.profile-input-wrapper {
+  display: flex;
+}
+
+.profile-input-wrapper .form-control {
+  margin-right: 10px;
+}
+
+.profile-divider {
+  margin: 20px 0;
+  border: 1px solid #444040;
+}
+
+.profile-budget-range,
+.profile-age-range {
+  display: flex;
+  align-items: center;
+}
+
+.profile-budget-separator,
+.profile-age-separator {
+  margin: 0 10px;
+}
+
+.profile-save-btn {
+  margin-top: 20px;
+}
+
+/* For Insights Page */
+
+.insight-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.insight-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+.insight-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.insight-field label {
+  width: 200px;
+  margin-right: 10px;
+  color: #fff;
+  text-align: left;
+}
+
+.insight-input-wrapper {
+  display: flex;
+  flex: 1;
+}
+
+.insight-input-wrapper .form-control {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.insight-submit-btn {
+  margin-left: 10px;
+}
+
+.filters-container {
+  margin-bottom: 20px;
+}
+
+.filters-container form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters-container .form-group {
+  flex: 1;
+}
+
+.budget-range-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
