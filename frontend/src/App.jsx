@@ -11,6 +11,7 @@ import CreatePost from './components/CreatePost';
 import Profile from './components/Profile';
 import Insight from './components/Insight';
 import AuthLayout from './components/AuthLayout';
+import Home from './components/Home';
 
 const router = createBrowserRouter([
   
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/insight",
         element: <Insight />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
       },
       {
           path: "*",
