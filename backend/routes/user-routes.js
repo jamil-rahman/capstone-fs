@@ -10,4 +10,10 @@ router.post('/signup', userController.signupUser);
 router.post('/login', authMiddleware, userController.loginUser);
 
 
+// Profile Routes
+router.get('/profile/:userId', authMiddleware, userController.getUserProfile);
+router.put('/profile', authMiddleware, userController.updateProfile);
+
+
+
 module.exports = router;
