@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const { connectDB } = require('./config/db.js');
 const { initializeApp, cert } = require('firebase-admin/app'); // Firebase Admin SDK for initialization
-const firebaseAdmin = require('firebase-admin'); // Firebase Admin CommonJS import
+const admin = require('firebase-admin'); // Firebase Admin CommonJS import
 const userRoutes = require('./routes/user-routes.js');
+const postRoutes = require('./routes/post-routes');
 const serviceAccount = require('./config/serviceAccountKey.json'); // Load service account JSON
 
 
@@ -11,20 +12,33 @@ const serviceAccount = require('./config/serviceAccountKey.json'); // Load servi
 const PORT = process.env.PORT || 5000;
 
 // Initialize Firebase Admin SDK using service account credentials
-initializeApp({
+admin.initializeApp({
   credential: cert(serviceAccount),
 });
+
+admin.auth().listUsers(1)
+    .then((listUsersResult) => {
+        console.log('Firebase Admin initialized successfully');
+    })
+    .catch((error) => {
+        console.log('Firebase Admin initialization error:', error);
+    });
 
 const app = express();
 
 // Middleware to parse JSON
+//app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
 connectDB();
 
 // Routes for my endpoints
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes); // User routes
+app.use('/api/posts', postRoutes); // Post routes
+
+// Only enable this in development environment
+app.use('/api/dev', require('./routes/dev-routes'));
 
 // Start the server
 app.listen(PORT, () => {
