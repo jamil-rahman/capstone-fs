@@ -33,6 +33,13 @@ app.use(express.json());
 // MongoDB connection
 connectDB();
 
+// Mid
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
 // Routes for my endpoints
 app.use('/api/users', userRoutes); // User routes
 app.use('/api/posts', postRoutes); // Post routes

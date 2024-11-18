@@ -191,5 +191,63 @@ const getUserProfile = async (req, res) => {
     }
 };
 
+const getMiniProfile = async (req, res) => {
+    try {
+        const { userId } = req.params;
 
-module.exports = { signupUser, loginUser, updateProfile, getUserProfile };
+        // Find user and select only needed fields
+        const user = await User.findOne({ firebaseUid: userId })
+            .select([
+                'name',
+                'photo',
+                'currentCity',
+                'occupation',
+                'smokes',
+                'drinks',
+                'prefersPets',
+                'cleanliness',
+                'budget'
+            ]);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // Format the response
+        const miniProfile = {
+            name: user.name,
+            photo: user.photo,
+            location: user.currentCity || 'Not specified',
+            occupation: user.occupation || 'Not specified',
+            preferences: {
+                smokes: user.smokes,
+                drinks: user.drinks,
+                prefersPets: user.prefersPets,
+                cleanliness: user.cleanliness
+            },
+            budget: {
+                min: user.budget.min,
+                max: user.budget.max
+            }
+        };
+
+        res.status(200).json({
+            success: true,
+            profile: miniProfile
+        });
+
+    } catch (error) {
+        console.error('Get mini profile error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch mini profile',
+            error: error.message
+        });
+    }
+};
+
+
+module.exports = { signupUser, loginUser, updateProfile, getUserProfile, getMiniProfile };
