@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { connectDB } = require('./config/db.js');
 const { initializeApp, cert } = require('firebase-admin/app'); // Firebase Admin SDK for initialization
 const admin = require('firebase-admin'); // Firebase Admin CommonJS import
@@ -27,18 +28,20 @@ admin.auth().listUsers(1)
 const app = express();
 
 // Middleware to parse JSON
-//app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // My Vite frontend URL
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB connection
 connectDB();
 
-// Mid
-
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
+
 
 // Routes for my endpoints
 app.use('/api/users', userRoutes); // User routes

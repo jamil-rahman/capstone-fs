@@ -5,7 +5,24 @@ const { getAuth } = require('firebase-admin/auth');
 const signupUser = async (req, res) => {
     const { email, password, name } = req.body;
 
+    // Input validation
+    if (!email || !password || !name) {
+        return res.status(400).json({
+            success: false,
+            message: 'All fields are required'
+        });
+    }
+
     try {
+        // Check if user already exists in MongoDB
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: 'User already exists'
+            });
+        }
+
         // Create Firebase user
         const userRecord = await getAuth().createUser({
             email,
@@ -17,22 +34,35 @@ const signupUser = async (req, res) => {
             firebaseUid: userRecord.uid,
             email,
             name,
-            // All other fields will use their default values
+            // All other fields will use their default values defined in the mongoose model
         });
 
         await newUser.save();
 
-        // Return the entire new user object
+        // Return the user object excluding sensitive information
+        const userResponse = newUser.toObject();
+        delete userResponse.firebaseUid; // Optional: if I want to hide this from client
+
         res.status(201).json({
             success: true,
             message: 'User signed up successfully',
-            user: newUser
+            user: userResponse
         });
     } catch (error) {
+        // Handle specific Firebase errors
+        if (error.code === 'auth/email-already-exists') {
+            return res.status(400).json({
+                success: false,
+                message: 'Email already registered'
+            });
+        }
+
+        // Log the error for debugging but send a generic message to client
+        console.error('Signup error:', error);
         res.status(400).json({
             success: false,
             message: 'Signup failed',
-            error: error.message
+            error: process.env.NODE_ENV === 'development' ? error.message : 'An error occurred during signup'
         });
     }
 };
@@ -51,6 +81,11 @@ const loginUser = async (req, res) => {
             });
         }
 
+        // Update last login timestamp
+        user.lastLoginAt = new Date();
+        await user.save();
+
+
         // On success, return the entire user object and a success message
         res.status(200).json({
             success: true,
@@ -59,10 +94,11 @@ const loginUser = async (req, res) => {
         });
 
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({
             success: false,
             message: 'Login failed',
-            error: error.message
+            error: process.env.NODE_ENV === 'development' ? error.message : 'An error occurred during login'
         });
     }
 };
