@@ -81,10 +81,7 @@ const SignUp = () => {
                 <Row className="justify-content-center">
                     <Col xs={11} sm={10} md={8} lg={6} xl={5}>
                         {/* App Branding */}
-                        <div className="text-center mb-5">
-                            <h1 className="display-4 mb-2">Your App Name</h1>
-                            <p className="lead text-muted">Your app's catchy tagline goes here</p>
-                        </div>
+                        <TextBanner />
 
                         {/* Sign Up Card */}
                         <Card className="border-0 shadow-sm">

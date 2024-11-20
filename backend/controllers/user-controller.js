@@ -67,12 +67,43 @@ const signupUser = async (req, res) => {
     }
 };
 
+const getCurrentUser = async (req, res) => {
+    try {
+        const firebaseUid = req.user.uid; // From my auth middleware
+
+        // Get latest user data
+        const user = await User.findOne({ firebaseUid })
+            .select('-firebaseUid'); // Exclude sensitive data
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching user data',
+            error: error.message
+        });
+    }
+};
+
 const loginUser = async (req, res) => {
     try {
+        // Firebase UID comes from authMiddleware
         const firebaseUid = req.user.uid;
+        console.log('Login attempt for Firebase UID:', firebaseUid);
 
-        // Find user and return entire document
+        // Find user in MongoDB
         const user = await User.findOne({ firebaseUid });
+        console.log('Found user:', user ? 'Yes' : 'No');
 
         if (!user) {
             return res.status(404).json({
@@ -81,24 +112,26 @@ const loginUser = async (req, res) => {
             });
         }
 
-        // Update last login timestamp
+        // Update last login
         user.lastLoginAt = new Date();
         await user.save();
 
-
-        // On success, return the entire user object and a success message
         res.status(200).json({
             success: true,
             message: 'Login successful',
-            user
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                // ... if needed, include other user fields
+            }
         });
-
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({
             success: false,
             message: 'Login failed',
-            error: process.env.NODE_ENV === 'development' ? error.message : 'An error occurred during login'
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
 };
@@ -286,4 +319,4 @@ const getMiniProfile = async (req, res) => {
 };
 
 
-module.exports = { signupUser, loginUser, updateProfile, getUserProfile, getMiniProfile };
+module.exports = { signupUser, getCurrentUser, loginUser, updateProfile, getUserProfile, getMiniProfile };

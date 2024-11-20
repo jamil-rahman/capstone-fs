@@ -1,3 +1,4 @@
+// src/utils/axiosConfig.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -7,44 +8,40 @@ const api = axios.create({
   }
 });
 
-// Add request interceptor for debugging
+// Add request logging
 api.interceptors.request.use(
   (config) => {
     console.log('Request:', {
-      url: config.url,
-      method: config.method,
-      data: config.data,
-      headers: config.headers
+      method: config.method?.toUpperCase(),
+      url: `${config.baseURL}${config.url}`,
+      headers: config.headers,
+      data: config.data
     });
     return config;
   },
   (error) => {
-    console.error('Request Error:', error);
     return Promise.reject(error);
   }
 );
 
-// Add response interceptor for debugging
+// Add response logging
 api.interceptors.response.use(
   (response) => {
-    console.log('Response:', response.data);
+    console.log('Response:', {
+      status: response.status,
+      url: response.config.url,
+      data: response.data
+    });
     return response;
   },
   (error) => {
-    console.error('Response Error:', error);
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.error('Error Data:', error.response.data);
-      console.error('Error Status:', error.response.status);
-      console.error('Error Headers:', error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      console.error('No response received:', error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.error('Error:', error.message);
-    }
+    console.error('API Error:', {
+      url: `${error.config.baseURL}${error.config.url}`,
+      method: error.config.method?.toUpperCase(),
+      status: error.response?.status,
+      data: error.response?.data,
+      headers: error.config.headers
+    });
     return Promise.reject(error);
   }
 );
