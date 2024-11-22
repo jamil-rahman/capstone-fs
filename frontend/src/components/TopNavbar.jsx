@@ -1,11 +1,21 @@
 // components/TopNavbar.jsx
-import { Navbar, Container, Nav, Button, NavDropdown, Image } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { List, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
-  // This will be replaced with actual auth logic later
-  const isLoggedIn = true; // Toggle this to test different states
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <Navbar bg="white" expand="lg" className="mb-3 shadow-sm" fixed="top">
@@ -33,40 +43,42 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
-            {isLoggedIn ? (
+            {user ? (
               <>
                 {/* Navigation Links */}
                 <Nav.Link as={Link} to="/new-post">New Post</Nav.Link>
-      
+                
                 {/* Profile Dropdown */}
                 <NavDropdown 
                   title={
                     <div className="d-inline-block">
-                      {/* If you have a user avatar, use this */}
-                      {/* <Image
-                        src="/path-to-avatar.jpg"
-                        roundedCircle
-                        width={32}
-                        height={32}
-                        className="object-fit-cover"
-                      /> */}
-                      
-                      {/* Placeholder icon if no avatar */}
-                      <div className="bg-light rounded-circle p-1 d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px' }}>
-                        <User size={20} />
-                      </div>
+                      {user.profileImage ? (
+                        <img
+                          src={user.profileImage}
+                          alt="Profile"
+                          className="rounded-circle object-fit-cover"
+                          style={{ width: '32px', height: '32px' }}
+                        />
+                      ) : (
+                        <div className="bg-light rounded-circle p-1 d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px' }}>
+                          <User size={20} />
+                        </div>
+                      )}
                     </div>
                   } 
                   id="profile-dropdown"
                   align="end"
                 >
-                  <NavDropdown.Item as={Link} to="/logout">
+                  <NavDropdown.Item as={Link} to="/profile">
+                    Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={handleLogout}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               </>
             ) : (
-              // Show these items when user is not logged in
               <>
                 <Nav.Link as={Link} to="/login">Login</Nav.Link>
                 <Nav.Link as={Link} to="/signup" className="btn btn-primary text-white ms-2">
