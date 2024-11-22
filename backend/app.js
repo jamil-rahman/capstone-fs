@@ -27,11 +27,14 @@ admin.auth().listUsers(1)
 
 const app = express();
 
-// Middleware to parse JSON
+// Enable CORS
 app.use(cors({
   origin: 'http://localhost:5173', // My Vite frontend URL
   credentials: true
 }));
+
+
+// Middleware to parse JSON
 app.use(express.json());
 
 // MongoDB connection

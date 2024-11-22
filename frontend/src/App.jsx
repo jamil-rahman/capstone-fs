@@ -4,6 +4,7 @@ import MainLayout from './layout/MainLayout';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
+
 // Pages
 import Home from './pages/Home';
 import Insights from './pages/Insights';

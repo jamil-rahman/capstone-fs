@@ -1,5 +1,20 @@
 :root {
   --navbar-height: 56px;
+  --navbar-margin: 20px;
+  --total-navbar-space: calc(var(--navbar-height) + var(--navbar-margin));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.main-layout {
+  margin-top: var(--total-navbar-space);
+}
+
+.sticky-sidebar {
+  top: var(--total-navbar-space) !important;
 }
 
 .hover-highlight:hover {
@@ -19,8 +34,38 @@
   transition: all 0.2s ease;
 }
 
+.badge-container {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  /* Makes the container circular */
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-label {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 @media (min-width: 768px) {
   .offcanvas-body {
     overflow-y: visible !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

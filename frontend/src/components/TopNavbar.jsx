@@ -18,10 +18,16 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
   };
 
   return (
-    <Navbar bg="white" expand="lg" className="mb-3 shadow-sm" fixed="top">
+    <Navbar
+      bg="white"
+      expand="lg"
+      fixed="top"
+      className="shadow-sm"
+      style={{ height: 'var(--navbar-height)' }}
+    >
       <Container fluid>
         {/* Left Menu Toggle */}
-        <Button 
+        <Button
           variant="light"
           className="d-md-none"
           onClick={onLeftSidebarToggle}
@@ -29,10 +35,10 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
           <List size={20} />
         </Button>
 
-        <Navbar.Brand as={Link} to="/">Your App</Navbar.Brand>
-        
+        <Navbar.Brand as={Link} to="/">When In Roam</Navbar.Brand>
+
         {/* Right Menu Toggle */}
-        <Button 
+        <Button
           variant="light"
           className="d-md-none me-2"
           onClick={onRightSidebarToggle}
@@ -47,9 +53,9 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
               <>
                 {/* Navigation Links */}
                 <Nav.Link as={Link} to="/new-post">New Post</Nav.Link>
-                
+
                 {/* Profile Dropdown */}
-                <NavDropdown 
+                <NavDropdown
                   title={
                     <div className="d-inline-block">
                       {user.profileImage ? (
@@ -65,7 +71,7 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
                         </div>
                       )}
                     </div>
-                  } 
+                  }
                   id="profile-dropdown"
                   align="end"
                 >

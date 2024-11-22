@@ -30,7 +30,7 @@ const MainLayout = () => {
           </Col>
 
           {/* Main Content Area */}
-          <Col xs={12} md={8} className="min-vh-100 border-start border-end">
+          <Col xs={12} md={8} className="min-vh-100 border-start border-end mt-5">
             <Outlet />
           </Col>
 

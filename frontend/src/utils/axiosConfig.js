@@ -1,49 +1,60 @@
 // src/utils/axiosConfig.js
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
+import { app } from '../config/firebase'; // Make sure this path is correct
+
+// Get auth instance
+const auth = getAuth(app);
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
-  headers: {
-    'Content-Type': 'application/json'
-  }
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+    headers: {
+        'Content-Type': 'application/json'
+    }
 });
 
-// Add request logging
+// Request interceptor
 api.interceptors.request.use(
-  (config) => {
-    console.log('Request:', {
-      method: config.method?.toUpperCase(),
-      url: `${config.baseURL}${config.url}`,
-      headers: config.headers,
-      data: config.data
-    });
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
+    async (config) => {
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                const token = await user.getIdToken(true);
+                config.headers.Authorization = `Bearer ${token}`;
+                console.log('Token added to request');
+            } else {
+                console.log('No user found - request will be sent without token');
+            }
+        } catch (error) {
+            console.error('Error adding token to request:', error);
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
 );
 
-// Add response logging
+// Response interceptor
 api.interceptors.response.use(
-  (response) => {
-    console.log('Response:', {
-      status: response.status,
-      url: response.config.url,
-      data: response.data
-    });
-    return response;
-  },
-  (error) => {
-    console.error('API Error:', {
-      url: `${error.config.baseURL}${error.config.url}`,
-      method: error.config.method?.toUpperCase(),
-      status: error.response?.status,
-      data: error.response?.data,
-      headers: error.config.headers
-    });
-    return Promise.reject(error);
-  }
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
+
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const token = await user.getIdToken(true);
+                    originalRequest.headers.Authorization = `Bearer ${token}`;
+                    return axios(originalRequest);
+                }
+            } catch (retryError) {
+                console.error('Token refresh failed:', retryError);
+            }
+        }
+
+        return Promise.reject(error);
+    }
 );
 
 export default api;

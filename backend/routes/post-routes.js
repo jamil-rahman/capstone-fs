@@ -1,25 +1,20 @@
 // routes/post-routes.js
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth');
-const { createPost,
-    getAllPosts,
-    updatePost,
-    deletePost,
-    getMyPosts } = require('../controllers/post-controller');
+const authMiddleware = require('../middleware/auth-prod');
+const postController = require('../controllers/post-controller');
 
 // All post routes are protected
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 // Create post
-router.post('/', createPost);
-
+router.post('/',  postController.createPost);
 // Get all posts
-router.get('/', getAllPosts);
-router.get('/my-posts', getMyPosts);
+router.get('/', authMiddleware, postController.getAllPosts);
+router.get('/my-posts', authMiddleware, postController.getMyPosts);
 // router.get('/:postId', getPostById);
-router.put('/:postId', updatePost);
-router.delete('/:postId', deletePost);
+router.put('/:postId', authMiddleware, postController.updatePost);
+router.delete('/:postId', authMiddleware, postController.deletePost);
 
 
 module.exports = router;

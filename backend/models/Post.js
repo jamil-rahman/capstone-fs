@@ -10,19 +10,37 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // Reference to User model using MongoDB _id
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
+        validate: {
+            validator: async function (v) {
+                const user = await mongoose.model('User').findById(v);
+                return user != null;
+            },
+            message: 'Referenced user does not exist'
+        }
     },
-    // We can also store firebaseUid for additional reference if needed
     authorFirebaseUid: {
         type: String,
         required: true
     }
 }, {
-    timestamps: true  // Adds createdAt and updatedAt fields
+    timestamps: true
+});
+
+// Middleware to check author exists before saving
+postSchema.pre('save', async function (next) {
+    try {
+        const user = await mongoose.model('User').findById(this.author);
+        if (!user) {
+            throw new Error('Referenced user does not exist');
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Add index for faster queries
