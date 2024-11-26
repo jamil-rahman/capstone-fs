@@ -1,6 +1,7 @@
 // controllers/post-controller.js
 const { Post } = require('../models/Post');
 const { User } = require('../models/User');
+console.log('User model:', User);
 const mongoose = require('mongoose');
 
 const createPost = async (req, res) => {
@@ -42,7 +43,6 @@ const createPost = async (req, res) => {
     }
 };
 
-// backend/controllers/postController.js
 const getAllPosts = async (req, res) => {
     try {
         // Get paginated posts with detailed author preferences

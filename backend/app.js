@@ -2,10 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db.js');
-const { initializeApp, cert } = require('firebase-admin/app'); // Firebase Admin SDK for initialization
+const { cert } = require('firebase-admin/app'); // Firebase Admin SDK for initialization
 const admin = require('firebase-admin'); // Firebase Admin CommonJS import
 const userRoutes = require('./routes/user-routes.js');
 const postRoutes = require('./routes/post-routes');
+const triviaRoutes = require('./routes/trivia-routes');
+const insightsRoutes = require('./routes/insights-routes');
+
 const serviceAccount = require('./config/serviceAccountKey.json'); // Load service account JSON
 
 
@@ -49,6 +52,9 @@ app.use((req, res, next) => {
 // Routes for my endpoints
 app.use('/api/users', userRoutes); // User routes
 app.use('/api/posts', postRoutes); // Post routes
+app.use('/api/trivia', triviaRoutes);   // Trivia routes
+app.use('/api/insights', insightsRoutes);// City insights routes
+
 
 // Only enable this in development environment
 app.use('/api/dev', require('./routes/dev-routes'));

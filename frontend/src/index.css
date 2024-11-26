@@ -8,6 +8,17 @@
   box-sizing: border-box;
 }
 
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid {
+  overflow-x: hidden;
+}
+
+
 
 .main-layout {
   margin-top: var(--total-navbar-space);
@@ -21,6 +32,20 @@
   background-color: rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
   transform: scale(1.05);
+}
+
+.rotate {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Optional: Add these if you want to style the active link */
@@ -55,6 +80,11 @@
 @media (min-width: 768px) {
   .offcanvas-body {
     overflow-y: visible !important;
+  }
+
+  .offcanvas {
+    width: 100% !important;
+    max-width: none !important;
   }
 }
 

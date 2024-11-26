@@ -1,4 +1,3 @@
-// components/LeftNavbar.jsx
 import { Nav, Offcanvas } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Home, PenSquare, User, LineChart } from 'lucide-react';
@@ -12,12 +11,12 @@ const LeftNavbar = ({ show, onHide }) => {
   ];
 
   const NavigationItems = () => (
-    <Nav className="flex-column gap-4 text-center mt-4">
+    <Nav className="flex-column gap-4 text-center">
       {navItems.map((item) => (
-        <Nav.Link 
+        <Nav.Link
           key={item.path}
-          as={Link} 
-          to={item.path} 
+          as={Link}
+          to={item.path}
           className="d-flex flex-column align-items-center gap-2 hover-highlight px-3 py-2 rounded"
         >
           {item.icon}
@@ -28,13 +27,13 @@ const LeftNavbar = ({ show, onHide }) => {
   );
 
   return (
-    <Offcanvas 
-      show={show} 
+    <Offcanvas
+      show={show}
       onHide={onHide}
-      placement="start" 
+      placement="start"
       responsive="md"
       className="w-auto border-0"
-      style={{ 
+      style={{
         marginTop: 'var(--navbar-height)',
         height: 'calc(100vh - var(--navbar-height))',
       }}
@@ -42,13 +41,9 @@ const LeftNavbar = ({ show, onHide }) => {
       <Offcanvas.Header closeButton className="d-md-none">
         <Offcanvas.Title>Navigation</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body 
-        className="p-4"
-        style={{ 
-          overflowY: { xs: 'auto', md: 'visible' },
-          height: '100%',
-          position: 'relative'
-        }}
+      <Offcanvas.Body
+        className="d-flex justify-content-center p-4"
+        style={{ height: '100%' }}
       >
         <NavigationItems />
       </Offcanvas.Body>
