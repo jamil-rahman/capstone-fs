@@ -18,6 +18,13 @@ body {
   overflow-x: hidden;
 }
 
+.left_nav{
+  background-color: #540D6E;
+  color: white;
+}
+.backdrop{
+  background-color: #EFEFEF;
+}
 
 
 .main-layout {

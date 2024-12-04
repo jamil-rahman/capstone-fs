@@ -1,8 +1,12 @@
-import { Nav, Offcanvas } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { Home, PenSquare, User, LineChart } from 'lucide-react';
+import { Nav, Offcanvas, Button } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Home, PenSquare, User, LineChart, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const LeftNavbar = ({ show, onHide }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const navItems = [
     { path: '/', text: 'Home', icon: <Home size={24} /> },
     { path: '/new-post', text: 'New Post', icon: <PenSquare size={24} /> },
@@ -10,20 +14,43 @@ const LeftNavbar = ({ show, onHide }) => {
     { path: '/insights', text: 'Insights', icon: <LineChart size={24} /> }
   ];
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   const NavigationItems = () => (
-    <Nav className="flex-column gap-4 text-center">
-      {navItems.map((item) => (
-        <Nav.Link
-          key={item.path}
-          as={Link}
-          to={item.path}
-          className="d-flex flex-column align-items-center gap-2 hover-highlight px-3 py-2 rounded"
+    <div className="d-flex flex-column justify-content-between h-100">
+      <Nav className="flex-column gap-4 text-center">
+        {navItems.map((item) => (
+          <Nav.Link
+            key={item.path}
+            as={Link}
+            to={item.path}
+            className="d-flex flex-column align-items-center gap-2 hover-highlight px-3 py-2 rounded text-white"
+          >
+            {item.icon}
+            <span className="fs-5 text-white">{item.text}</span>
+          </Nav.Link>
+        ))}
+      </Nav>
+
+      {/* Logout Button */}
+      <div className="text-center mt-auto pt-4">
+        <Button
+          variant="danger"
+          onClick={handleLogout}
+          className="d-flex align-items-center gap-2 mx-auto"
         >
-          {item.icon}
-          <span className="fs-5">{item.text}</span>
-        </Nav.Link>
-      ))}
-    </Nav>
+          <LogOut size={20} />
+          <span>Logout</span>
+        </Button>
+      </div>
+    </div>
   );
 
   return (

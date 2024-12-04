@@ -6,12 +6,22 @@ import { app } from '../config/firebase'; // Make sure this path is correct
 // Get auth instance
 const auth = getAuth(app);
 
+//USE THIS CODE FOR DEVELOPMENT
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
     headers: {
         'Content-Type': 'application/json'
     }
 });
+
+/* USE THIS CODE FOR PRODUCTION
+const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL || '/api',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+*/
 
 // Request interceptor
 api.interceptors.request.use(

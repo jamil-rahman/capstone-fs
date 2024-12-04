@@ -155,6 +155,34 @@ const updateProfile = async (req, res) => {
             });
         }
 
+        if (updateData.dietaryRestrictions) {
+            const validDietaryRestrictions = [
+                'None',
+                'Halal',
+                'Kosher',
+                'Vegetarian',
+                'Vegan',
+                'Pescatarian',
+                'Gluten-Free',
+                'Dairy-Free',
+                'Nut-Free',
+                'Shellfish-Free',
+                'Low-Carb',
+                'Keto',
+                'Paleo'
+            ];
+            const isValid = updateData.dietaryRestrictions.every(restriction =>
+                validDietaryRestrictions.includes(restriction)
+            );
+
+            if (!isValid) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid dietary restriction value(s)'
+                });
+            }
+        }
+
         if (updateData.sleepSchedule &&
             !['early-bird', 'night-owl', 'flexible'].includes(updateData.sleepSchedule)) {
             return res.status(400).json({
@@ -264,8 +292,8 @@ const getMiniProfile = async (req, res) => {
     try {
         const { userId } = req.params;
 
-        // Find user and select only needed fields
-        const user = await User.findOne({ firebaseUid: userId })
+        // Find user by MongoDB _id instead of firebaseUid
+        const user = await User.findById(userId)
             .select([
                 'name',
                 'photo',
@@ -288,7 +316,7 @@ const getMiniProfile = async (req, res) => {
         // Format the response
         const miniProfile = {
             name: user.name,
-            photo: user.photo,
+            photo: user.photo || "",
             location: user.currentCity || 'Not specified',
             occupation: user.occupation || 'Not specified',
             preferences: {
@@ -317,6 +345,5 @@ const getMiniProfile = async (req, res) => {
         });
     }
 };
-
 
 module.exports = { signupUser, getCurrentUser, loginUser, updateProfile, getUserProfile, getMiniProfile };

@@ -33,7 +33,23 @@ const userSchema = new mongoose.Schema({
     default: null
   },
   dietaryRestrictions: [{
-    type: String
+    type: String,
+    enum: [
+      'None',
+      'Halal',
+      'Kosher',
+      'Vegetarian',
+      'Vegan',
+      'Pescatarian',
+      'Gluten-Free',
+      'Dairy-Free',
+      'Nut-Free',
+      'Shellfish-Free',
+      'Low-Carb',
+      'Keto',
+      'Paleo'
+    ],
+    default: ['None']
   }],
   smokes: {
     type: Boolean,

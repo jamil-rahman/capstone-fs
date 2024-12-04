@@ -88,7 +88,7 @@ const RightNavbar = ({ show, onHide }) => {
         marginTop: 'var(--navbar-height)',
         height: 'calc(100vh - var(--navbar-height))',
         width: '100%',
-        maxWidth: '350px' // Control maximum width
+       // maxWidth: '350px' // Control maximum width
       }}
     >
       <Offcanvas.Header closeButton className="d-md-none">

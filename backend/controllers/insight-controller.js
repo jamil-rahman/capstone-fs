@@ -7,7 +7,7 @@ const openai = new OpenAI({
 });
 
 // Helper function to construct the prompt based on user preferences
-const constructPrompt = (city, province, user) => {
+const constructPrompt = (city, province, user, additional) => {
     console.log('Constructing prompt for:', { city, province });
 
     return `
@@ -60,11 +60,12 @@ const constructPrompt = (city, province, user) => {
         - Common concerns
         - Weather considerations
         
-        7. Special Considerations (based on user preferences):
+        7. Special Considerations (based on user preferences and input):
         ${user.dietaryRestrictions.length > 0 ? '- Restaurants catering to dietary restrictions' : ''}
         ${user.prefersPets ? '- Pet-friendly areas and services' : ''}
         ${user.sleepSchedule === 'night-owl' ? '- Late-night venues and services' : ''}
         ${user.guestComfort !== 'never' ? '- Social gathering spaces and entertainment venues' : ''}
+        ${additional || 'none'} considerations or preferences 
     `.trim();
 };
 
