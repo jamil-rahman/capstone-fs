@@ -18,11 +18,12 @@ body {
   overflow-x: hidden;
 }
 
-.left_nav{
-  background-color: #540D6E;
-  color: white;
+.left_nav {
+  background-color: #F3FCF0;
+  /* color: black; */
 }
-.backdrop{
+
+.backdrop {
   background-color: #EFEFEF;
 }
 

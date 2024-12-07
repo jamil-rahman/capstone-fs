@@ -73,7 +73,7 @@ const Home = () => {
   }
 
   return (
-    <Container className="py-4">
+    <Container className="md:px-5 py-3">
       {error && (
         <Alert variant="danger" onClose={() => setError(null)} dismissible>
           {error}

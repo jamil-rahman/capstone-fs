@@ -1,5 +1,5 @@
 // src/components/posts/Post.jsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Card, Overlay, Popover } from 'react-bootstrap';
 import UserPreferences from './UserPreferences';
 import MiniProfile from './MiniProfile';
@@ -59,7 +59,7 @@ const Post = ({ post }) => {
     };
 
     // Clean up timeout on unmount
-    React.useEffect(() => {
+    useEffect(() => {
         return () => {
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
@@ -68,77 +68,78 @@ const Post = ({ post }) => {
     }, []);
 
     return (
-        <Card className="mb-4 shadow-sm">
+        <Card className="mb-4 shadow-sm px-2 mx-md-5">
             <Card.Body>
-                <div>
-                    <div
-                        ref={targetRef}
-                        className="fw-bold d-inline-block"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        {author.name || 'Unknown User'}
-                    </div>
-                    <div className='p-1 my-2'>
-                    {author.preferences && <UserPreferences preferences={author.preferences} />}
-                    </div>
-                    <Overlay
-                        target={targetRef.current}
-                        show={showTooltip}
-                        placement="right-start"
-                        offset={[0, 8]}
-                        popperConfig={{
-                            modifiers: [
-                                {
-                                    name: 'preventOverflow',
-                                    options: {
-                                        boundary: document.body,
-                                        padding: 8
-                                    },
-                                },
-                                {
-                                    name: 'offset',
-                                    options: {
-                                        offset: [0, 8],
-                                    },
-                                }
-                            ],
-                        }}
-                    >
-                        {({ placement, arrowProps, show: _show, popper, ...props }) => (
-                            <Popover
-                                {...props}
-                                style={{
-                                    ...props.style,
-                                    zIndex: 1000,
-                                    padding: 0,
-                                    border: 'none',
-                                    backgroundColor: 'transparent'
-                                }}
-                            >
-                                {loading ? (
-                                    <Card className="shadow-sm" style={{ width: '300px' }}>
-                                        <Card.Body className="text-center">
-                                            <div className="spinner-border spinner-border-sm text-primary" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                        </Card.Body>
-                                    </Card>
-                                ) : error ? (
-                                    <Card className="shadow-sm" style={{ width: '300px' }}>
-                                        <Card.Body className="text-center text-danger">
-                                            {error}
-                                        </Card.Body>
-                                    </Card>
-                                ) : (
-                                    <MiniProfile profile={miniProfile} />
-                                )}
-                            </Popover>
-                        )}
-                    </Overlay>
+
+                <div
+                    ref={targetRef}
+                    className="fw-bold d-inline-block"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    style={{ cursor: 'pointer' }}
+                >
+                    {author.name || 'Unknown User'}
                 </div>
 
+                <div className='p-1 my-2'>
+                    {author.preferences && <UserPreferences preferences={author.preferences} />}
+                </div>
+                <Overlay
+                    target={targetRef.current}
+                    show={showTooltip}
+                    placement="right-start"
+                    offset={[0, 8]}
+                    popperConfig={{
+                        modifiers: [
+                            {
+                                name: 'preventOverflow',
+                                options: {
+                                    boundary: document.body,
+                                    padding: 8
+                                },
+                            },
+                            {
+                                name: 'offset',
+                                options: {
+                                    offset: [0, 8],
+                                },
+                            }
+                        ],
+                    }}
+                >
+                    {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                        <Popover
+                            {...props}
+                            style={{
+                                ...props.style,
+                                zIndex: 1000,
+                                padding: 0,
+                                border: 'none',
+                                backgroundColor: 'transparent'
+                            }}
+                        >
+                            {loading ? (
+                                <Card className="shadow-sm" style={{ width: '300px' }}>
+                                    <Card.Body className="text-center">
+                                        <div className="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
+                            ) : error ? (
+                                <Card className="shadow-sm" style={{ width: '300px' }}>
+                                    <Card.Body className="text-center text-danger">
+                                        {error}
+                                    </Card.Body>
+                                </Card>
+                            ) : (
+                                <MiniProfile profile={miniProfile} />
+                            )}
+                        </Popover>
+                    )}
+                </Overlay>
+
+                <Card.Title className="fw-bold">{post.title}</Card.Title>
                 <Card.Text className="mb-3">{post.body}</Card.Text>
 
                 <small className="text-muted">

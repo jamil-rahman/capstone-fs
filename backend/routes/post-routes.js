@@ -8,7 +8,7 @@ const postController = require('../controllers/post-controller');
 // router.use(authMiddleware);
 
 // Create post
-router.post('/',  postController.createPost);
+router.post('/', authMiddleware, postController.createPost);
 // Get all posts
 router.get('/', authMiddleware, postController.getAllPosts);
 router.get('/my-posts', authMiddleware, postController.getMyPosts);

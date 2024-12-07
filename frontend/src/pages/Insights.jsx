@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { 
-  Container, 
-  Form, 
-  Button, 
-  Card, 
-  Alert, 
-  Row, 
-  Col 
+import {
+  Container,
+  Form,
+  Button,
+  Card,
+  Alert,
+  Row,
+  Col
 } from 'react-bootstrap';
 import { Brain } from 'lucide-react';
 import { analyzeCity } from '../services/insightService';
+import InsightCard from '../components/insights/InsightCard';
+import TypingIndicator from '../components/common/TypingIndicator';
 
 const Insights = () => {
   const [formData, setFormData] = useState({
@@ -20,21 +22,40 @@ const Insights = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [insights, setInsights] = useState(null);
+  const [showResults, setShowResults] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setShowResults(false);
 
     try {
       const data = await analyzeCity(formData);
       setInsights(data);
+      // Add a small delay before showing results to ensure smooth transition
+      setTimeout(() => setShowResults(true), 500);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to analyze city insights');
     } finally {
       setLoading(false);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     const data = await analyzeCity(formData);
+  //     setInsights(data);
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || err.message || 'Failed to analyze city insights');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -120,23 +141,17 @@ const Insights = () => {
         </Alert>
       )}
 
-      {insights && (
+      {loading && <TypingIndicator />}
+
+      {insights && showResults && (
         <div className="insights-results">
-          {Object.entries(insights.insights.sections).map(([key, section]) => (
-            <Card key={key} className="mb-4">
-              <Card.Header>
-                <h5 className="mb-0">{section.title}</h5>
-              </Card.Header>
-              <Card.Body>
-                <ul className="list-unstyled mb-0">
-                  {section.content.map((item, index) => (
-                    <li key={index} className="mb-2">
-                      {item.replace(/^- /, '')}
-                    </li>
-                  ))}
-                </ul>
-              </Card.Body>
-            </Card>
+          {Object.entries(insights.insights.sections).map(([key, section], sectionIndex) => (
+            <InsightCard
+              key={key}
+              title={section.title}
+              content={section.content}
+              startTyping={true}
+            />
           ))}
         </div>
       )}

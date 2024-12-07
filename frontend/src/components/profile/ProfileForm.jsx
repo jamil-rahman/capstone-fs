@@ -21,8 +21,8 @@ const ProfileForm = ({ profile, onSubmit, onChange, loading, error, successMessa
                 <LivingPreferences profile={profile} onChange={onChange} />
                 <RoommatePreferences profile={profile} onChange={onChange} />
 
-                <div className="d-grid col-2 mx-auto mt-4">
-                    <Button type="submit" variant="primary" disabled={loading}>
+                <div className="d-grid mt-4">
+                    <Button className='col-6 col-md-2 mx-auto' type="submit" variant="outline-primary" disabled={loading}>
                         {loading ? 'Saving...' : 'Save Changes'}
                     </Button>
                 </div>

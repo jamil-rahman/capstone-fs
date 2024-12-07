@@ -6,22 +6,24 @@ const mongoose = require('mongoose');
 
 const createPost = async (req, res) => {
     try {
-        const { title, body, author, authorFirebaseUid } = req.body;
+        const { title, body } = req.body;
+        const { uid } = req.user; // From Firebase auth middleware
 
-        // Check if author and authorFirebaseUid are provided
-        if (!author || !authorFirebaseUid) {
-            return res.status(400).json({
+        // Find user by Firebase UID
+        const user = await mongoose.model('User').findOne({ firebaseUid: uid });
+        
+        if (!user) {
+            return res.status(404).json({
                 success: false,
-                message: 'Author and authorFirebaseUid are required'
+                message: 'User not found'
             });
         }
 
-        // Create new post
         const newPost = new Post({
             title,
             body,
-            author,
-            authorFirebaseUid
+            author: user._id,
+            authorFirebaseUid: uid
         });
 
         await newPost.save();
