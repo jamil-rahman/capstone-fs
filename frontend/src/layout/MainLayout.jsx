@@ -21,8 +21,6 @@ const MainLayout = () => {
       {/* Main Container */}
       <Container fluid className="px-0">
         <Row className="mx-0 backdrop">
-          {/* Left Sidebar - Hidden on mobile */}
-          {/* <Col md={1} className="d-none d-md-block sticky-top p-0 left_nav" style={{ height: 'calc(100vh - var(--navbar-height))' }}> */}
           <Col md={1} className="d-none d-md-block sticky-top p-0 left_nav">
             <LeftNavbar show={showLeftSidebar} onHide={() => setShowLeftSidebar(false)} />
           </Col>

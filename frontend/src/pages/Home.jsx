@@ -73,28 +73,30 @@ const Home = () => {
   }
 
   return (
-    <Container className="md:px-5 py-3">
-      {error && (
-        <Alert variant="danger" onClose={() => setError(null)} dismissible>
-          {error}
-        </Alert>
-      )}
+    <Container className="md:px-5 py-3 d-flex justify-content-center">
+      <div style={{ width: '100%', maxWidth: '800px' }}>
+        {error && (
+          <Alert variant="danger" onClose={() => setError(null)} dismissible>
+            {error}
+          </Alert>
+        )}
 
-      <InfiniteScroll
-        dataLength={posts.length}
-        next={loadPosts}
-        hasMore={hasMore}
-        loader={<LoadingSpinner />}
-        endMessage={
-          <p className="text-center text-muted py-3">
-            {posts.length === 0 ? 'No posts available.' : 'No more posts to load.'}
-          </p>
-        }
-      >
-        {posts.map(post => (
-          <Post key={post._id} post={post} />
-        ))}
-      </InfiniteScroll>
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={loadPosts}
+          hasMore={hasMore}
+          loader={<LoadingSpinner />}
+          endMessage={
+            <p className="text-center text-muted py-3">
+              {posts.length === 0 ? 'No posts available.' : 'No more posts to load.'}
+            </p>
+          }
+        >
+          {posts.map(post => (
+            <Post key={post._id} post={post} />
+          ))}
+        </InfiniteScroll>
+      </div>
     </Container>
   );
 };

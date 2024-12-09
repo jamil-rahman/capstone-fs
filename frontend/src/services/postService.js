@@ -24,3 +24,13 @@ export const createPost = async (postData) => {
         throw error;
     }
 };
+
+export const getMyPosts = async () => {
+    const response = await api.get('/posts/my-posts');
+    return response.data;
+};
+
+export const deletePost = async (postId) => {
+    const response = await api.delete(`/posts/${postId}`);
+    return response.data;
+};

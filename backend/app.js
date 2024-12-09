@@ -59,6 +59,7 @@ app.use('/api/users', userRoutes); // User routes
 app.use('/api/posts', postRoutes); // Post routes
 app.use('/api/trivia', triviaRoutes);   // Trivia routes
 app.use('/api/insights', insightsRoutes);// City insights routes
+app.use('/api/email', require('./routes/email-routes')); // Email routes
 
 // Only enable this in development environment
 app.use('/api/dev', require('./routes/dev-routes'));

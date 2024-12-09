@@ -238,31 +238,6 @@ const getMyPosts = async (req, res) => {
             .sort({ createdAt: -1 })
             .exec();
 
-        // Format posts using the same structure as getAllPosts
-        // const formattedPosts = posts.map(post => ({
-        //     _id: post._id,
-        //     title: post.title,
-        //     body: post.body,
-        //     createdAt: post.createdAt,
-        //     author: {
-        //         _id: post.author._id,
-        //         name: post.author.name,
-        //         photo: post.author.photo,
-        //         preferences: {
-        //             dietary: post.author.dietaryRestrictions,
-        //             lifestyle: {
-        //                 smokes: post.author.smokes,
-        //                 drinks: post.author.drinks,
-        //                 prefersPets: post.author.prefersPets,
-        //                 cleanliness: post.author.cleanliness,
-        //                 sleepSchedule: post.author.sleepSchedule,
-        //                 guestComfort: post.author.guestComfort
-        //             },
-        //             budget: post.author.budget
-        //         }
-        //     }
-        // }));
-
         res.status(200).json({
             success: true,
             posts: posts

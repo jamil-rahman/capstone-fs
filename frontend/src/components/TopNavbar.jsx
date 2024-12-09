@@ -11,7 +11,7 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
       expand="lg"
       fixed="top"
       className="shadow-sm"
-      style={{ 
+      style={{
         height: 'var(--navbar-height)',
         backgroundColor: '#7F95D1',
       }}
@@ -26,8 +26,8 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
           <List size={20} />
         </Button>
 
-        <Navbar.Brand className='text-white px-md-2' as={Link} to="/">
-          When In Roam
+        <Navbar.Brand className='text-white px-md-2 d-flex align-items-center gap-2' as={Link} to="/">
+          <span className="fs-4">When in Roam</span>
         </Navbar.Brand>
 
         {/* Right Menu Toggle */}
@@ -50,9 +50,9 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
               <Nav.Link className='text-white' as={Link} to="/login">
                 Login
               </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/signup" 
+              <Nav.Link
+                as={Link}
+                to="/signup"
                 className="btn btn-primary text-white ms-2"
               >
                 Sign Up

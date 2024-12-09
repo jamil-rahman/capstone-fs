@@ -8,6 +8,37 @@
   box-sizing: border-box;
 }
 
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #93e7f6;
+  border-radius: 20px;
+}
+
+
+::-webkit-scrollbar-thumb:vertical {
+  min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  min-width: 30px;
+  /* Minimum width for horizontal scrollbars */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b00 transparent;
+}
+
 body {
   overflow-x: hidden;
   margin: 0;
@@ -24,9 +55,32 @@ body {
 }
 
 .backdrop {
-  background-color: #EFEFEF;
+  background-color: #f3f3f4;
 }
 
+.nav-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .nav-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
 
 .main-layout {
   margin-top: var(--total-navbar-space);
@@ -54,6 +108,19 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-icon {
+  animation: rotate 2s linear infinite;
 }
 
 /* Optional: Add these if you want to style the active link */

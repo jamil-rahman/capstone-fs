@@ -88,7 +88,7 @@ const RightNavbar = ({ show, onHide }) => {
         marginTop: 'var(--navbar-height)',
         height: 'calc(100vh - var(--navbar-height))',
         width: '100%',
-       // maxWidth: '350px' // Control maximum width
+        // maxWidth: '350px' // Control maximum width
       }}
     >
       <Offcanvas.Header closeButton className="d-md-none">
@@ -102,7 +102,19 @@ const RightNavbar = ({ show, onHide }) => {
         }}
       >
         <div className="mb-4">
-          <h3 className="h4 mb-4">Did You Know?</h3>
+          <div className="d-flex align-items-center gap-2 mb-4 mx-0">
+            <h3 className="h4 mb-0">Did You Know</h3>
+            <img
+              src="/question.png"
+              alt="Question mark"
+              style={{
+                width: '20px',
+                height: '20px',
+                objectFit: 'contain',
+                marginBottom: '2px' // Slight adjustment to align with text
+              }}
+            />
+          </div>
 
           {loading ? (
             <div className="text-center p-4">
