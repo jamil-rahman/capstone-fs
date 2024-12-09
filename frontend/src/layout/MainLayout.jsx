@@ -13,30 +13,25 @@ const MainLayout = () => {
   return (
     <>
       {/* Top Navigation */}
-      <TopNavbar 
+      <TopNavbar
         onLeftSidebarToggle={() => setShowLeftSidebar(true)}
         onRightSidebarToggle={() => setShowRightSidebar(true)}
       />
 
       {/* Main Container */}
-      <Container fluid>
-        <Row>
-          {/* Left Sidebar - Hidden on mobile */}
-          <Col md={1} className="d-none d-md-block vh-100 overflow-auto position-sticky" style={{ top: '0' }}>
-            <LeftNavbar 
-              show={showLeftSidebar}
-              onHide={() => setShowLeftSidebar(false)}
-            />
+      <Container fluid className="px-0">
+        <Row className="mx-0 backdrop">
+          <Col md={1} className="d-none d-md-block sticky-top p-0 left_nav">
+            <LeftNavbar show={showLeftSidebar} onHide={() => setShowLeftSidebar(false)} />
           </Col>
 
           {/* Main Content Area */}
-          <Col xs={12} md={8} className="min-vh-100 border-start border-end">
+          <Col xs={12} md={9} className="border-start border-end px-1" style={{ marginTop: 'var(--navbar-height)' }}>
             <Outlet />
           </Col>
-
           {/* Right Sidebar - Hidden on mobile */}
-          <Col md={3} className="d-none d-md-block vh-100 overflow-auto position-sticky" style={{ top: '0' }}>
-            <RightNavbar 
+          <Col md={2} className="d-none d-md-block vh-100 overflow-auto position-sticky" style={{ top: '0' }}>
+            <RightNavbar
               show={showRightSidebar}
               onHide={() => setShowRightSidebar(false)}
             />

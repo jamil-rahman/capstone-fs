@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import authService from '../services/authService';
+import TextBanner from '../components/TextBanner';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -81,7 +82,7 @@ const SignUp = () => {
                 <Row className="justify-content-center">
                     <Col xs={11} sm={10} md={8} lg={6} xl={5}>
                         {/* App Branding */}
-                        <TextBanner />
+                       <TextBanner />
 
                         {/* Sign Up Card */}
                         <Card className="border-0 shadow-sm">

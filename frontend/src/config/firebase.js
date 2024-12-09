@@ -11,15 +11,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
 
-// For debugging in development (Optional)
-if (import.meta.env.DEV) {
-  console.log('Firebase Configuration:', {
-    ...firebaseConfig,
-    apiKey: '***' 
-  });
-}
+export default app;

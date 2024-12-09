@@ -1,93 +1,65 @@
-// components/TopNavbar.jsx
-import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap';
-import { List, User } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { List } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
+  const { user } = useAuth();
 
   return (
-    <Navbar bg="white" expand="lg" className="mb-3 shadow-sm" fixed="top">
+    <Navbar
+      expand="lg"
+      fixed="top"
+      className="shadow-sm"
+      style={{
+        height: 'var(--navbar-height)',
+        backgroundColor: '#7F95D1',
+      }}
+    >
       <Container fluid>
         {/* Left Menu Toggle */}
-        <Button 
-          variant="light"
-          className="d-md-none"
+        <Button
+          variant="link"
+          className="d-md-none p-0 text-white border-0"
           onClick={onLeftSidebarToggle}
         >
           <List size={20} />
         </Button>
 
-        <Navbar.Brand as={Link} to="/">Your App</Navbar.Brand>
-        
+        <Navbar.Brand className='text-white px-md-2 d-flex align-items-center gap-2' as={Link} to="/">
+          <span className="fs-4">When in Roam</span>
+        </Navbar.Brand>
+
         {/* Right Menu Toggle */}
-        <Button 
-          variant="light"
-          className="d-md-none me-2"
+        <Button
+          variant="link"
+          className="d-md-none me-2 p-0 text-white border-0"
           onClick={onRightSidebarToggle}
         >
           <List size={20} />
         </Button>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto align-items-center">
-            {user ? (
-              <>
-                {/* Navigation Links */}
-                <Nav.Link as={Link} to="/new-post">New Post</Nav.Link>
-                
-                {/* Profile Dropdown */}
-                <NavDropdown 
-                  title={
-                    <div className="d-inline-block">
-                      {user.profileImage ? (
-                        <img
-                          src={user.profileImage}
-                          alt="Profile"
-                          className="rounded-circle object-fit-cover"
-                          style={{ width: '32px', height: '32px' }}
-                        />
-                      ) : (
-                        <div className="bg-light rounded-circle p-1 d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px' }}>
-                          <User size={20} />
-                        </div>
-                      )}
-                    </div>
-                  } 
-                  id="profile-dropdown"
-                  align="end"
-                >
-                  <NavDropdown.Item as={Link} to="/profile">
-                    Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            ) : (
-              <>
-                <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                <Nav.Link as={Link} to="/signup" className="btn btn-primary text-white ms-2">
-                  Sign Up
-                </Nav.Link>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
+        {/* Nav items only visible on desktop */}
+        <Nav className="ms-auto align-items-center d-none d-md-flex">
+          {user ? (
+            <Nav.Link className='text-white' as={Link} to="/new-post">
+              Hi, {user.name.split(" ")[0]}
+            </Nav.Link>
+          ) : (
+            <>
+              <Nav.Link className='text-white' as={Link} to="/login">
+                Login
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/signup"
+                className="btn btn-primary text-white ms-2"
+              >
+                Sign Up
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
       </Container>
     </Navbar>
   );

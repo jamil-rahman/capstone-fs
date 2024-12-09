@@ -1,11 +1,126 @@
 :root {
   --navbar-height: 56px;
+  --navbar-margin: 20px;
+  --total-navbar-space: calc(var(--navbar-height) + var(--navbar-margin));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #93e7f6;
+  border-radius: 20px;
+}
+
+
+::-webkit-scrollbar-thumb:vertical {
+  min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  min-width: 30px;
+  /* Minimum width for horizontal scrollbars */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b00 transparent;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid {
+  overflow-x: hidden;
+}
+
+.left_nav {
+  background-color: #F3FCF0;
+  /* color: black; */
+}
+
+.backdrop {
+  background-color: #f3f3f4;
+}
+
+.nav-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .nav-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
+
+.main-layout {
+  margin-top: var(--total-navbar-space);
+}
+
+.sticky-sidebar {
+  top: var(--total-navbar-space) !important;
 }
 
 .hover-highlight:hover {
   background-color: rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
   transform: scale(1.05);
+}
+
+.rotate {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-icon {
+  animation: rotate 2s linear infinite;
 }
 
 /* Optional: Add these if you want to style the active link */
@@ -19,8 +134,43 @@
   transition: all 0.2s ease;
 }
 
+.badge-container {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  /* Makes the container circular */
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-label {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 @media (min-width: 768px) {
   .offcanvas-body {
     overflow-y: visible !important;
+  }
+
+  .offcanvas {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
