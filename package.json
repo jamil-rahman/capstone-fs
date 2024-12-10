@@ -1,9 +1,11 @@
 {
-    "engines": {
-      "node": "18.x"
-    },
-    "scripts": {
-      "start": "cd backend && node app.js",
-      "heroku-postbuild": "cd frontend && npm install && npm run build && mv dist ../backend/"
-    }
+  "name": "when-in-roam",
+  "version": "1.0.0",
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "cd backend && node app.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build && mv dist ../backend/"
   }
+}
