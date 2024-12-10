@@ -6,7 +6,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db.js');
-const { cert } = require('firebase-admin/app');
+// const { cert } = require('firebase-admin/app');
+// const admin = require('firebase-admin');
 const admin = require('firebase-admin');
 const userRoutes = require('./routes/user-routes.js');
 const postRoutes = require('./routes/post-routes');
@@ -20,9 +21,14 @@ const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 const PORT = process.env.PORT || 5000;
 
 // Initialize Firebase Admin SDK using service account credentials
+// admin.initializeApp({
+//   credential: cert(serviceAccount),
+// });
+
 admin.initializeApp({
-  credential: cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount)
 });
+
 
 admin.auth().listUsers(1)
   .then((listUsersResult) => {
@@ -68,5 +74,5 @@ app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'dist', 'index.html
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  // console.log(`Server running on http://localhost:${PORT}`);
 });
