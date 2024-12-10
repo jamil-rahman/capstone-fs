@@ -2,16 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db.js');
-const { cert } = require('firebase-admin/app'); 
-const admin = require('firebase-admin'); 
+const { cert } = require('firebase-admin/app');
+const admin = require('firebase-admin');
 const userRoutes = require('./routes/user-routes.js');
 const postRoutes = require('./routes/post-routes');
 const triviaRoutes = require('./routes/trivia-routes');
 const insightsRoutes = require('./routes/insights-routes');
 const path = require('path');
 
-const serviceAccount = require('./config/serviceAccountKey.json'); // Load service account JSON
-
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 // Define port from environment variables or fallback to 5000
 const PORT = process.env.PORT || 5000;
