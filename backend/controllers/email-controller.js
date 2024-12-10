@@ -37,7 +37,7 @@ const emailController = async (req, res) => {
         console.log('Sender:', sender);
         console.log('Recipient:', recipient);
 
-    const trueMessage = `From: ${sender.email}\n\n
+        const trueMessage = `From: ${sender.email}\n\n
     Subject: ${subject}\n\n
     Message: ${message}
     `;

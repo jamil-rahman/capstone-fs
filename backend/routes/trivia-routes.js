@@ -7,6 +7,6 @@ const triviaController = require('../controllers/trivia-controller');
 router.get('/random', triviaController.getRandomTrivia);
 
 // Route to get all trivia
-router.get('/', authMiddleware, triviaController.getAllTrivia);
+// router.get('/', authMiddleware, triviaController.getAllTrivia);
 
 module.exports = router;

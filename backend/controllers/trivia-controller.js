@@ -25,7 +25,7 @@ const triviaController = {
     try {
       // Randomly decide whether to fetch 3 or 4 items
       const count = Math.random() < 0.5 ? 3 : 4;
-      
+
       // Use MongoDB's aggregation pipeline to get random documents
       const randomTrivia = await Trivia.aggregate([
         { $sample: { size: count } }
