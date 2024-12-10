@@ -11,7 +11,7 @@ const createPost = async (req, res) => {
 
         // Find user by Firebase UID
         const user = await mongoose.model('User').findOne({ firebaseUid: uid });
-        
+
         if (!user) {
             return res.status(404).json({
                 success: false,

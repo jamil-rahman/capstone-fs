@@ -8,7 +8,6 @@ const openai = new OpenAI({
 
 // Helper function to construct the prompt based on user preferences
 const constructPrompt = (city, province, user, additional) => {
-    console.log('Constructing prompt for:', { city, province });
 
     return `
         I need detailed information about living in ${city}, ${province}, Canada for someone with the following preferences:
@@ -65,7 +64,8 @@ const constructPrompt = (city, province, user, additional) => {
         ${user.prefersPets ? '- Pet-friendly areas and services' : ''}
         ${user.sleepSchedule === 'night-owl' ? '- Late-night venues and services' : ''}
         ${user.guestComfort !== 'never' ? '- Social gathering spaces and entertainment venues' : ''}
-        ${additional || 'none'} considerations or preferences 
+        Provide more information based on available ${additional || 'none'} considerations or preferences 
+
     `.trim();
 };
 
@@ -77,7 +77,7 @@ const parseResponse = (rawResponse) => {
     let currentContent = [];
 
     const lines = rawResponse.split('\n');
-    
+
     for (const line of lines) {
         const sectionMatch = line.match(/^\d\.\s+([\w\s&]+):/);
 
@@ -138,7 +138,7 @@ const getOpenAIResponse = async (prompt) => {
 // Main controller function
 const getCityInsights = async (req, res) => {
     try {
-        const { city, province } = req.body;
+        const { city, province, additional } = req.body;
         const userId = req.user.uid;
 
         // Input validation
@@ -171,7 +171,7 @@ const getCityInsights = async (req, res) => {
         }
 
         // Construct prompt and get OpenAI response
-        const prompt = constructPrompt(city, province, user);
+        const prompt = constructPrompt(city, province, user, additional);
         const rawResponse = await getOpenAIResponse(prompt);
         const parsedSections = parseResponse(rawResponse);
 
