@@ -1,74 +1,71 @@
+// Error handling first
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
 
+// Imports
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { connectDB } = require('./config/db.js');
-// const { cert } = require('firebase-admin/app');
-// const admin = require('firebase-admin');
+const path = require('path');
 const admin = require('firebase-admin');
+const { connectDB } = require('./config/db.js');
+
+// Route imports
 const userRoutes = require('./routes/user-routes.js');
 const postRoutes = require('./routes/post-routes');
 const triviaRoutes = require('./routes/trivia-routes');
 const insightsRoutes = require('./routes/insights-routes');
-const path = require('path');
+const emailRoutes = require('./routes/email-routes');
+
+// Initialize Express
 const app = express();
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-// Define port from environment variables or fallback to 5000
+
+// Environment variables
 const PORT = process.env.PORT || 5000;
 
-// Initialize Firebase Admin SDK using service account credentials
-// admin.initializeApp({
-//   credential: cert(serviceAccount),
-// });
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-admin.auth().listUsers(1)
-  .then((listUsersResult) => {
-    console.log('Firebase Admin initialized successfully');
-  })
-  .catch((error) => {
-    console.log('Firebase Admin initialization error:', error);
+// Initialize Firebase Admin
+try {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
   });
+  console.log('Firebase Admin SDK initialized');
+} catch (error) {
+  console.error('Firebase initialization error:', error);
+}
 
-
+// Middleware
 app.use(cors());
-
-// Middleware to parse JSON
 app.use(express.json());
-
-// MongoDB connection
-connectDB();
-
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
 
-//ROUTES GO FIRST
-// Routes for my endpoints
-app.use('/api/users', userRoutes); // User routes
-app.use('/api/posts', postRoutes); // Post routes
-app.use('/api/trivia', triviaRoutes);   // Trivia routes
-app.use('/api/insights', insightsRoutes);// City insights routes
-app.use('/api/email', require('./routes/email-routes')); // Email routes
-
-// Serve static files GOES AFTER ROUTES
-app.use(express.static(path.join(__dirname, 'dist')), (err) => {
-  if (err) {
-    console.error('Static file serving error:', err);
-  }
+// Database connection
+connectDB().catch(err => {
+  console.error('MongoDB connection error:', err);
 });
 
-//For production
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'dist', 'index.html')));
+// API Routes
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/trivia', triviaRoutes);
+app.use('/api/insights', insightsRoutes);
+app.use('/api/email', emailRoutes);
 
-// Start the server
+// Static files serving
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Catch-all route for React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+// Start server with error handling
 app.listen(PORT, () => {
-  // console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
+}).on('error', (error) => {
+  console.error('Server startup error:', error);
 });
