@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db.js');
-const { cert } = require('firebase-admin/app'); // Firebase Admin SDK for initialization
-const admin = require('firebase-admin'); // Firebase Admin CommonJS import
+const { cert } = require('firebase-admin/app'); 
+const admin = require('firebase-admin'); 
 const userRoutes = require('./routes/user-routes.js');
 const postRoutes = require('./routes/post-routes');
 const triviaRoutes = require('./routes/trivia-routes');
@@ -30,16 +30,9 @@ admin.auth().listUsers(1)
   });
 
 
-
-
 const app = express();
 
-// Enable CORS
-app.use(cors({
-  origin: 'http://localhost:5173', // My Vite frontend URL
-  credentials: true
-}));
-
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -51,9 +44,8 @@ app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-
+//ROUTES GO FIRST
 // Routes for my endpoints
 app.use('/api/users', userRoutes); // User routes
 app.use('/api/posts', postRoutes); // Post routes
@@ -61,11 +53,15 @@ app.use('/api/trivia', triviaRoutes);   // Trivia routes
 app.use('/api/insights', insightsRoutes);// City insights routes
 app.use('/api/email', require('./routes/email-routes')); // Email routes
 
-// Only enable this in development environment
-app.use('/api/dev', require('./routes/dev-routes'));
+// Serve static files GOES AFTER ROUTES
+app.use(express.static(path.join(__dirname, 'dist')), (err) => {
+  if (err) {
+    console.error('Static file serving error:', err);
+  }
+});
 
 //For production
-//app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'dist/index.html')));
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'dist', 'index.html')));
 
 // Start the server
 app.listen(PORT, () => {
