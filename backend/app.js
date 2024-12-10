@@ -5,6 +5,7 @@ process.on('uncaughtException', (error) => {
 
 // Imports
 require('dotenv').config();
+console.log('DOTENV LOADED:', process.env.PORT ? true : false);
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
