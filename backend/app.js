@@ -14,9 +14,8 @@ const postRoutes = require('./routes/post-routes');
 const triviaRoutes = require('./routes/trivia-routes');
 const insightsRoutes = require('./routes/insights-routes');
 const path = require('path');
-
+const app = express();
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-
 // Define port from environment variables or fallback to 5000
 const PORT = process.env.PORT || 5000;
 
@@ -29,7 +28,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-
 admin.auth().listUsers(1)
   .then((listUsersResult) => {
     console.log('Firebase Admin initialized successfully');
@@ -38,8 +36,6 @@ admin.auth().listUsers(1)
     console.log('Firebase Admin initialization error:', error);
   });
 
-
-const app = express();
 
 app.use(cors());
 
