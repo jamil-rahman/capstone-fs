@@ -30,10 +30,10 @@ const Login = () => {
         password: passwordRef.current.value
       };
 
-      console.log('Attempting login with:', {
-        ...credentials,
-        password: '[REDACTED]'
-      });
+      // console.log('Attempting login with:', {
+      //   ...credentials,
+      //   password: '[REDACTED]'
+      // });
 
       const response = await authService.login(credentials);
 
@@ -43,10 +43,10 @@ const Login = () => {
       // Storing the user data in localStorage just in case
       localStorage.setItem('user', JSON.stringify(response.user));
 
-      console.log('Login successful, navigating to:', from);
+      // console.log('Login successful, navigating to:', from);
       navigate(from, { replace: true });
     } catch (err) {
-      console.error('Login error details:', err);
+      // console.error('Login error details:', err);
       setError(err.message || 'Failed to sign in');
     } finally {
       setLoading(false);

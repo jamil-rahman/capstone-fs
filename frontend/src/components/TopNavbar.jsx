@@ -13,7 +13,7 @@ const TopNavbar = ({ onLeftSidebarToggle, onRightSidebarToggle }) => {
       className="shadow-sm"
       style={{
         height: 'var(--navbar-height)',
-        backgroundColor: '#7F95D1',
+        backgroundColor: '#232F3E',
       }}
     >
       <Container fluid>

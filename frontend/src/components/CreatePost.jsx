@@ -25,8 +25,7 @@ const CreatePost = () => {
       return;
     }
 
-    // Here, you would normally handle post submission logic, such as calling an API
-    console.log('Post submitted', { title, description });
+    // console.log('Post submitted', { title, description });
   };
 
   return (

@@ -9,7 +9,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Pages
 import Home from './pages/Home';
 import Insights from './pages/Insights';
-import NewPost from './pages/NewPost';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -30,7 +29,6 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/insights" element={<Insights />} />
-              <Route path="/new-post" element={<NewPost />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/my-post" element={<PostManagement />} />
             </Route>

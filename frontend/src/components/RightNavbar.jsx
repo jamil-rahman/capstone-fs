@@ -22,7 +22,7 @@ const RightNavbar = ({ show, onHide }) => {
 
       const token = await user.getIdToken();
 
-      const response = await fetch('http://localhost:5000/api/trivia/random', {
+      const response = await fetch('/api/trivia/random', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',
@@ -53,7 +53,7 @@ const RightNavbar = ({ show, onHide }) => {
       setTriviaItems(result.data);
       setError(null);
     } catch (err) {
-      console.error('Error details:', err);
+      // console.error('Error details:', err);
       if (err.message === 'User not authenticated') {
         setError('Please log in to view trivia');
       } else {

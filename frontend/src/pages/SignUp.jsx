@@ -57,10 +57,10 @@ const SignUp = () => {
                 name: `${firstNameRef.current.value} ${lastNameRef.current.value}`
             };
 
-            console.log('Submitting signup data:', {
-                ...userData,
-                password: '[REDACTED]'
-            });
+            // console.log('Submitting signup data:', {
+            //     ...userData,
+            //     password: '[REDACTED]'
+            // });
 
             await authService.signup(userData);
 
@@ -69,7 +69,7 @@ const SignUp = () => {
             setSuccess('Account created successfully. Redirecting to login...');
             setTimeout(() => navigate('/login'), 3000);
         } catch (err) {
-            console.error('Signup error:', err);
+            // console.error('Signup error:', err);
             setError(err.message || 'Failed to create account');
         } finally {
             setLoading(false);
