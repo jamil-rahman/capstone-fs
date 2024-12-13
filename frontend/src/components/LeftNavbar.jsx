@@ -22,7 +22,7 @@ const LeftNavbar = ({ show, onHide }) => {
       await logout();
       navigate('/login');
     } catch (error) {
-      console.error('Logout error:', error);
+      // console.error('Logout error:', error);
     }
   };
 
@@ -107,7 +107,7 @@ const LeftNavbar = ({ show, onHide }) => {
         show={showCreatePost}
         onHide={() => setShowCreatePost(false)}
         onPostCreated={(newPost) => {
-          console.log('New post created:', newPost);
+          // console.log('New post created:', newPost);
           setShowCreatePost(false);
           window.location.reload();
         }}

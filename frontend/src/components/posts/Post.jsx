@@ -30,7 +30,7 @@ const Post = ({ post }) => {
                 setError(null);
                 try {
                     if (!author._id) {
-                        console.log('Author data:', author);
+                        // console.log('Author data:', author);
                         throw new Error('Author ID not available');
                     }
 
@@ -42,7 +42,7 @@ const Post = ({ post }) => {
                         throw new Error(response.message || 'Failed to fetch profile');
                     }
                 } catch (err) {
-                    console.error('Mini profile error:', err);
+                    // console.error('Mini profile error:', err);
                     setError(err.message);
                 } finally {
                     setLoading(false);

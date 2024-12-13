@@ -15,7 +15,7 @@ export const getMiniProfile = async (userId) => {
         const response = await api.get(`/users/mini-profile/${userId}`);
         return response.data;
     } catch (error) {
-        console.error('GetMiniProfile error:', error);
+        // console.error('GetMiniProfile error:', error);
         throw error;
     }
 };

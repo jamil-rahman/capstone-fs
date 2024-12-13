@@ -37,8 +37,6 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Apply the filters and fetch the updated posts
-    // You can make an API call here with the updated filters
     console.log('Filters applied:', filters);
   };
 

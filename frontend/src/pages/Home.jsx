@@ -27,14 +27,14 @@ const Home = () => {
       // Wait for a bit to ensure Firebase is fully initialized
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      console.log('Fetching posts with user:', user?.email);
+      // console.log('Fetching posts with user:', user?.email);
       const data = await fetchPosts(page);
 
       setPosts(prev => [...prev, ...data.posts]);
       setHasMore(data.pagination?.hasMore || false);
       setPage(prev => prev + 1);
     } catch (err) {
-      console.error('Error loading posts:', err);
+      // console.error('Error loading posts:', err);
       if (err.response?.status === 401) {
         setError('Authentication error. Please try logging in again.');
         navigate('/login');
