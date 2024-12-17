@@ -17,7 +17,7 @@ const Insights = () => {
   const [formData, setFormData] = useState({
     city: '',
     province: '',
-    specialConditions: ''
+    additional: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -91,8 +91,8 @@ const Insights = () => {
               <Form.Label>Special Conditions <span className='text-muted'>&#40;Optional&#41;</span> </Form.Label>
               <Form.Control
                 as="textarea"
-                name="specialConditions"
-                value={formData.specialConditions}
+                name="additional"
+                value={formData.additional}
                 onChange={handleInputChange}
                 rows={3}
                 placeholder="Enter any special conditions or requirements..."
