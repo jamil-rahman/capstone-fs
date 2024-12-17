@@ -9,6 +9,10 @@ const openai = new OpenAI({
 // Helper function to construct the prompt based on user preferences
 const constructPrompt = (city, province, user, additional) => {
 
+    const additionalConsiderations = additional
+        ? `\n8. Additional Considerations:\n- ${additional}`
+        : '';
+
     return `
         I need detailed information about living in ${city}, ${province}, Canada for someone with the following preferences:
         
@@ -64,7 +68,7 @@ const constructPrompt = (city, province, user, additional) => {
         ${user.prefersPets ? '- Pet-friendly areas and services' : ''}
         ${user.sleepSchedule === 'night-owl' ? '- Late-night venues and services' : ''}
         ${user.guestComfort !== 'never' ? '- Social gathering spaces and entertainment venues' : ''}
-        Provide more information based on available ${additional || 'none'} considerations or preferences 
+        ${additionalConsiderations}
 
     `.trim();
 };
